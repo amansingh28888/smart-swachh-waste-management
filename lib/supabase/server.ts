@@ -8,6 +8,8 @@ import { cookies } from "next/headers";
  * and other trusted server-only jobs that never handle a user request.
  */
 export async function createClient() {
+console.log("SUPABASE URL:", !!process.env.NEXT_PUBLIC_SUPABASE_URL);
+console.log("SUPABASE ANON KEY:", !!process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
   const cookieStore = await cookies();
 
   return createServerClient(
