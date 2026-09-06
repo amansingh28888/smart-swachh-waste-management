@@ -16,7 +16,7 @@ const ComplaintResultSchema = z.object({
 interface AnalyzeComplaintInput {
   description: string;
   imageBase64?: string;
-  imageMimeType?: string;
+  mimeType?: string;
 }
 
 /**
@@ -29,7 +29,7 @@ interface AnalyzeComplaintInput {
 export async function analyzeComplaint({
   description,
   imageBase64,
-  imageMimeType = "image/jpeg",
+  mimeType = "image/jpeg",
 }: AnalyzeComplaintInput): Promise<ComplaintAIResult> {
   if (!isAIAvailable()) {
     return getDemoComplaintResult(description);
@@ -39,7 +39,7 @@ export async function analyzeComplaint({
     const raw = await generateContent({
       prompt: `${COMPLAINT_ANALYSIS_PROMPT}\n\nCitizen's description: "${description}"`,
       imageBase64,
-      imageMimeType,
+      imageMimeType: mimeType,
     });
 
     const parsed = JSON.parse(extractJson(raw));
